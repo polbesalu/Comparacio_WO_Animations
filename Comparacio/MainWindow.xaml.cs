@@ -23,7 +23,7 @@ namespace Comparacio
     /// </summary>
     public partial class MainWindow : Window
     {
-        
+
         List<Border> elements;
         List<Rectangle> rectangles;
         List<Ellipse> ellipses;
@@ -32,8 +32,10 @@ namespace Comparacio
         int[] valorsReals;
         int ngruix;
         int nradi;
-        int tpausa;
+        double tpausa;
         int[] posintercanvis;
+
+
         public MainWindow()
         {
             InitializeComponent(
@@ -55,14 +57,16 @@ namespace Comparacio
             cb_intercanviar.SelectedIndex = 48;
             cb_fons.SelectedIndex = 136;
         }
+
+
         public void GenerarAleatori(int valor)
         {
             Random r = new Random();
             valorsFigures = new int[valor];
             int count = 0;
             valorsReals = new int[valor];
-            
-          
+
+
 
             for (int i = 0; i < valor; i++)
             {
@@ -70,36 +74,38 @@ namespace Comparacio
             }
             while (count < valor)
             {
-               
-               int aux= r.Next(1, valor+1 );
+
+                int aux = r.Next(1, valor + 1);
                 if (!valorsFigures.Contains(aux))
                 {
                     valorsFigures[count] = aux;
                     count++;
                 }
             }
-           
-           
+
+
         }
+        
+        
         public void CrearRectangles()
         {
-            Border border ;
- 
-           
+            Border border;
+
+
             Rectangle rectangle;
             elements = new List<Border>();
             rectangles = new List<Rectangle>();
-            for(int i=0; i<valorsFigures.Length;i++)
+            for (int i = 0; i < valorsFigures.Length; i++)
             {
                 rectangle = new Rectangle();
 
                 border = new Border();
                 border.Child = rectangle;
-                if ( posintercanvis[i]!=0&& chk_intercanvi.IsChecked==true)
+                if (posintercanvis[i] != 0 && chk_intercanvi.IsChecked == true)
                 {
                     rectangle.Fill = ObteColor(cb_intercanviar.SelectedItem);
                 }
-              else  if (valorsFigures[i] == valorsReals[i])
+                else if (valorsFigures[i] == valorsReals[i])
                 {
 
 
@@ -108,45 +114,47 @@ namespace Comparacio
                 }
 
                 else
-                    rectangle.Fill = ObteColor(cb_incorrecte.SelectedItem) ;
-                
-                Thickness br= new Thickness(ngruix);
+                    rectangle.Fill = ObteColor(cb_incorrecte.SelectedItem);
+
+                Thickness br = new Thickness(ngruix);
                 border.BorderThickness = br;
                 border.BorderBrush = Brushes.Black;
                 CornerRadius cr = new CornerRadius(nradi);
-          
+
                 border.CornerRadius = cr;
                 rectangle.RadiusX = nradi;
                 rectangle.RadiusY = nradi;
-                rectangle.Width = ((canvas.ActualWidth-ngruix*ngruix) / numlinies);
-                rectangle.Height = ((canvas.ActualHeight - ngruix )* valorsFigures[i]/numlinies);
-                Canvas.SetLeft(border,  canvas.ActualWidth*i/numlinies);
+                rectangle.Width = ((canvas.ActualWidth - ngruix * ngruix) / numlinies);
+                rectangle.Height = ((canvas.ActualHeight - ngruix) * valorsFigures[i] / numlinies);
+                Canvas.SetLeft(border, canvas.ActualWidth * i / numlinies);
                 Canvas.SetBottom(border, 0);
                 canvas.Children.Add(border);
                 elements.Add(border);
                 rectangles.Add(rectangle);
-             }
+            }
         }
+        
+        
         public void CrearPunts()
         {
             Border border;
             Ellipse point;
             elements = new List<Border>();
             ellipses = new List<Ellipse>();
-          
+
             for (int i = 0; i < valorsFigures.Length; i++)
             {
                 point = new Ellipse();
                 border = new Border();
                 border.Child = point;
                 CornerRadius cr = new CornerRadius(1000);
-               
+
                 border.CornerRadius = cr;
                 if (posintercanvis[i] != 0 && chk_intercanvi.IsChecked == true)
                 {
                     point.Fill = ObteColor(cb_intercanviar.SelectedItem);
                 }
-             
+
                 else if (valorsFigures[i] == valorsReals[i])
                 {
 
@@ -160,31 +168,29 @@ namespace Comparacio
                 Thickness br = new Thickness(ngruix);
                 border.BorderThickness = br;
                 border.BorderBrush = Brushes.Black;
-             
+
 
 
                 point.Width = ((canvas.ActualWidth - ngruix * ngruix) / numlinies);
                 point.Height = ((canvas.ActualWidth - ngruix * ngruix) / numlinies);
                 Canvas.SetLeft(border, canvas.ActualWidth * i / numlinies);
-                Canvas.SetBottom(border, ((canvas.ActualHeight - (ngruix+point.Height)) * valorsFigures[i] / numlinies));
+                Canvas.SetBottom(border, ((canvas.ActualHeight - (ngruix + point.Height)) * valorsFigures[i] / numlinies));
                 canvas.Children.Add(border);
                 elements.Add(border);
                 ellipses.Add(point);
             }
 
-          
-        }
-      
 
-        
+        }
+
 
         private void mn_genera_Click(object sender, RoutedEventArgs e)
         {
-           
+
             canvas.Children.Clear();
             posintercanvis = new int[numlinies];
-         
-         
+
+
             if (chk_aleatori.IsChecked == true)
                 GenerarAleatori(numlinies);
             else
@@ -197,6 +203,7 @@ namespace Comparacio
             Crear();
         }
 
+
         private void Crear()
         {
             canvas.Children.Clear();
@@ -206,6 +213,7 @@ namespace Comparacio
             else
                 CrearRectangles();
         }
+
 
         private void GenerarNormal(int valor)
         {
@@ -217,41 +225,28 @@ namespace Comparacio
             {
                 valorsReals[i] = i + 1;
             }
-            
-            for(int i=0;i<valor;i++)
+
+            for (int i = 0; i < valor; i++)
             {
                 valorsFigures[i] = i + 1;
             }
         }
 
+
         private void Invertir(int valor)
         {
 
-            
-                int[] tempfigures = valorsFigures;
-                valorsFigures = new int[valor];
-                for (int i = 0; i < valor; i++)
-                {
-                    valorsFigures[i] = tempfigures[valor - 1 - i];
-                }
-           
-        }
-/* Funcio que he emprat per trobar els index num dels colors
-        private void TrobaIndexColor(string Color)
-        {
-            PropertyInfo[] propertyInfos = typeof(Colors).GetProperties();
-            int count = 0;
-            foreach (PropertyInfo a in propertyInfos)
+
+            int[] tempfigures = valorsFigures;
+            valorsFigures = new int[valor];
+            for (int i = 0; i < valor; i++)
             {
-                if (a.ToString().Contains(Color))
-                {
-                    string b = "a";
-                    string c = "b";
-                }
-                count++;
+                valorsFigures[i] = tempfigures[valor - 1 - i];
             }
+
         }
-*/
+
+
         private void mn_ordena_Click(object sender, RoutedEventArgs e)
         {
             ComboBoxItem comboBoxItem = (ComboBoxItem)cb_ordenacio.SelectedItem;
@@ -263,22 +258,11 @@ namespace Comparacio
                 {
                     if (comboBoxItem.Content.ToString().Contains("Inserció Directa"))
                     {
-                        
-                           
-
-
-                            IncercioDirecta();
-                          
-                        
+                        IncercioDirecta();
                     }
                     else if (comboBoxItem.Content.ToString().Contains("Selecció Directa"))
                     {
-
-
                         SeleccioDirecta();
-                           
-                       
-                        
                     }
                     else if (comboBoxItem.Content.ToString().Contains("Bombolla Sacsejada"))
                     {
@@ -288,64 +272,53 @@ namespace Comparacio
                     {
                         Bombolla();
                     }
-                }      
-                       
-                     
-
-                    
-
-        
+                }
         }
 
-      
 
         private bool CheckOrdenat()
         {
-            int count=0;
+            int count = 0;
             bool NoEstaOrdentat = false;
 
-          while(count<numlinies&&!NoEstaOrdentat )
+            while (count < numlinies && !NoEstaOrdentat)
             {
-                if(valorsFigures[count]!=valorsReals[count])
+                if (valorsFigures[count] != valorsReals[count])
                 {
                     NoEstaOrdentat = true;
                 }
                 count++;
             }
             return !NoEstaOrdentat;
-
         }
 
 
         private void SeleccioDirecta()
         {
-        
-           
-        for (int i = 0; i < numlinies - 1; i++)
-        {
-              
+            for (int i = 0; i < numlinies - 1; i++)
+            {
                 int min = i;
                 for (int j = i + 1; j < numlinies; j++)
-            {
+                {
                     Crear();
                     posintercanvis = new int[numlinies];
                     if (valorsFigures[j] < valorsFigures[min])
-                {
-                    int temp = valorsFigures[j];
-                    valorsFigures[j] = valorsFigures[min];
-                    valorsFigures[min] = temp;
+                    {
+                        int temp = valorsFigures[j];
+                        valorsFigures[j] = valorsFigures[min];
+                        valorsFigures[min] = temp;
                         posintercanvis[min] = 1;
                         posintercanvis[j] = 1;
                     }
                     Espera(tpausa);
                     DoEvents();
                 }
-                
             }
             posintercanvis = new int[numlinies];
             Crear();
-           
         }
+
+
         private void Sacsejada()
         {
             bool EsIntercanvi = true;
@@ -353,8 +326,6 @@ namespace Comparacio
             int final = numlinies;
             while (EsIntercanvi == true)
             {
-
-
                 EsIntercanvi = false;
 
                 for (int i = inici; i < final - 1; ++i)
@@ -372,14 +343,12 @@ namespace Comparacio
                     posintercanvis[i + 1] = 1;
                     Espera(tpausa);
                     DoEvents();
-
                 }
 
                 final = final - 1;
 
                 if (EsIntercanvi != false)
                 {
-                   
                     EsIntercanvi = false;
                     for (int i = final - 1; i >= inici; i--)
                     {
@@ -397,14 +366,14 @@ namespace Comparacio
                         Espera(tpausa);
                         DoEvents();
                     }
-                   
                 }
-
                 inici = inici + 1;
             }
             posintercanvis = new int[numlinies];
             Crear();
         }
+
+
         private void IncercioDirecta()
         {
             int temp;
@@ -412,8 +381,6 @@ namespace Comparacio
 
             for (int i = 0; i < numlinies; i++)
             {
-
-               
                 temp = valorsFigures[i];
                 j = i - 1;
                 while (j >= 0 && valorsFigures[j] > temp)
@@ -424,7 +391,7 @@ namespace Comparacio
                     posintercanvis[j] = 1;
                     posintercanvis[j + 1] = 1;
                     j--;
-                    
+
                     Espera(tpausa);
                     DoEvents();
                 }
@@ -438,9 +405,9 @@ namespace Comparacio
             }
             posintercanvis = new int[numlinies];
             Crear();
-          
-
         }
+
+
         private void Bombolla()
         {
             int temp;
@@ -457,16 +424,20 @@ namespace Comparacio
                     }
                     posintercanvis[j] = 1;
                     posintercanvis[j - 1] = 1;
-                
+
                     Espera(tpausa);
                     DoEvents();
                 }
             posintercanvis = new int[numlinies];
             Crear();
-            
+
         }
+
+
         #region Threads
+
         Thread thread;
+
         private void Espera(double milliseconds)
         {
             var frame = new DispatcherFrame();
@@ -478,7 +449,9 @@ namespace Comparacio
             thread.Start();
             Dispatcher.PushFrame(frame);
         }
+
         static Action action;
+
         public static void DoEvents()
         {
             action = new Action(delegate { });
@@ -486,34 +459,29 @@ namespace Comparacio
                System.Windows.Threading.DispatcherPriority.Background,
                action);
         }
+
+
         protected override void OnClosed(EventArgs e)
         {
             Application.Current.Dispatcher.InvokeShutdown();
             thread?.Abort();
             base.OnClosed(e);
         }
+
         #endregion
-      
+
+
         private void mn_atura_Click(object sender, RoutedEventArgs e)
         {
-       
-            
-           
-
-                OnClosed(e);
-
-                
-           
-           
+            OnClosed(e);
         }
+
 
         private void canvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-
-
             Crear();
-
         }
+
 
         private void mn_hamburguer_Click(object sender, RoutedEventArgs e)
         {
@@ -523,8 +491,8 @@ namespace Comparacio
             mn_atura.IsEnabled = false;
             mn_genera.IsEnabled = false;
             mn_ordena.IsEnabled = false;
-        
-    }
+        }
+
 
         private void dp_main_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -535,50 +503,41 @@ namespace Comparacio
             mn_ordena.IsEnabled = true;
         }
 
+
         private void iupd_nelements_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             if (iupd_nelements.Text != "")
             {
 
                 if (Convert.ToInt32(iupd_nelements.Text) <= 0)
-                {
                     numlinies = 1;
-                }
                 else if (Convert.ToInt32(iupd_nelements.Text) > 250)
-                {
-                    numlinies=250;
-                }
+                    numlinies = 250;
                 else
-                {
                     numlinies = Convert.ToInt32(iupd_nelements.Text);
-                }
             }
             else
                 iupd_nelements.Text = "0";
         }
 
+
         private void iupd_gruix_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             if (iupd_gruix.Text != "")
             {
-
                 if (Convert.ToInt32(iupd_gruix.Text) < 0)
-                {
                     ngruix = 0;
-                }
                 else if (Convert.ToInt32(iupd_gruix.Text) > 10)
-                {
                     ngruix = 10;
-                }
                 else
-                {
                     ngruix = Convert.ToInt32(iupd_gruix.Text);
-                }
             }
             else
                 iupd_gruix.Text = "0";
 
         }
+        
+        
         public Brush ObteColor(object colorPropietat)
         {
             if (colorPropietat != null)
@@ -589,58 +548,45 @@ namespace Comparacio
             }
             else
                 return new SolidColorBrush(Colors.Green);
-            }
+        }
+        
+        
         private void iupd_radi_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             if (iupd_radi.Text != "")
             {
-
                 if (Convert.ToInt32(iupd_radi.Text) < 0)
-                {
                     nradi = 0;
-                }
                 else if (Convert.ToInt32(iupd_radi.Text) > 100)
-                {
                     nradi = 100;
-                }
                 else
-                {
                     nradi = Convert.ToInt32(iupd_radi.Text);
-                }
             }
             else
                 iupd_radi.Text = "0";
-
         }
 
+        
         private void iupd_tpausa_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             if (iupd_tpausa.Text != "")
             {
-
-                if (Convert.ToInt32(iupd_tpausa.Text) < 0)
-                {
+                if (Convert.ToDouble(iupd_tpausa.Text) < 0)
                     tpausa = 0;
-                }
-                else if (Convert.ToInt32(iupd_tpausa.Text) > 5000)
-                {
+                else if (Convert.ToDouble(iupd_tpausa.Text) > 5000)
                     tpausa = 100;
-                }
                 else
-                {
-                    tpausa = Convert.ToInt32(iupd_tpausa.Text);
-                }
+                    tpausa = Convert.ToDouble(iupd_tpausa.Text);
             }
             else
                 iupd_tpausa.Text = "0";
         }
 
+        
         private void cb_fons_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Brush brush = ObteColor(cb_fons.SelectedItem);
-            canvas.Background =brush;
-           
+            canvas.Background = brush;
         }
     }
-
 }

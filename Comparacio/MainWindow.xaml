@@ -226,7 +226,7 @@
 
             <Grid x:Name="tauler" Grid.Row="1">
 
-                <Canvas x:Name="canvas" Background="Wheat"  SizeChanged="canvas_SizeChanged"></Canvas>
+                <Canvas x:Name="canvas" Background="Wheat" SizeChanged="canvas_SizeChanged"></Canvas>
             </Grid>
 
         </DockPanel>

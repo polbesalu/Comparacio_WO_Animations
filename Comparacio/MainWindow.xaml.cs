@@ -112,7 +112,7 @@ namespace Comparacio
                 rectangle.RadiusY = nradi;
                 rectangle.Width = ((canvas.ActualWidth - ngruix * ngruix) / numlinies);
                 rectangle.Height = ((canvas.ActualHeight - ngruix) * valorsFigures[i] / numlinies);
-                Canvas.SetLeft(border, canvas.ActualWidth * i / numlinies);
+                Canvas.SetLeft(border, (canvas.ActualWidth * i / numlinies));
                 Canvas.SetBottom(border, 0);
                 canvas.Children.Add(border);
                 elements.Add(border);

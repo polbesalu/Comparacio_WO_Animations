@@ -66,15 +66,12 @@ namespace Comparacio
             int count = 0;
             valorsReals = new int[valor];
 
-
-
             for (int i = 0; i < valor; i++)
             {
                 valorsReals[i] = i + 1;
             }
             while (count < valor)
             {
-
                 int aux = r.Next(1, valor + 1);
                 if (!valorsFigures.Contains(aux))
                 {
@@ -82,15 +79,12 @@ namespace Comparacio
                     count++;
                 }
             }
-
-
         }
         
         
         public void CrearRectangles()
         {
             Border border;
-
 
             Rectangle rectangle;
             elements = new List<Border>();
@@ -102,17 +96,9 @@ namespace Comparacio
                 border = new Border();
                 border.Child = rectangle;
                 if (posintercanvis[i] != 0 && chk_intercanvi.IsChecked == true)
-                {
                     rectangle.Fill = ObteColor(cb_intercanviar.SelectedItem);
-                }
                 else if (valorsFigures[i] == valorsReals[i])
-                {
-
-
                     rectangle.Fill = ObteColor(cb_correcte.SelectedItem);
-
-                }
-
                 else
                     rectangle.Fill = ObteColor(cb_incorrecte.SelectedItem);
 
@@ -151,25 +137,15 @@ namespace Comparacio
 
                 border.CornerRadius = cr;
                 if (posintercanvis[i] != 0 && chk_intercanvi.IsChecked == true)
-                {
                     point.Fill = ObteColor(cb_intercanviar.SelectedItem);
-                }
-
                 else if (valorsFigures[i] == valorsReals[i])
-                {
-
-
                     point.Fill = ObteColor(cb_correcte.SelectedItem);
-
-                }
-
                 else
                     point.Fill = ObteColor(cb_incorrecte.SelectedItem);
+
                 Thickness br = new Thickness(ngruix);
                 border.BorderThickness = br;
                 border.BorderBrush = Brushes.Black;
-
-
 
                 point.Width = ((canvas.ActualWidth - ngruix * ngruix) / numlinies);
                 point.Height = ((canvas.ActualWidth - ngruix * ngruix) / numlinies);
@@ -179,17 +155,13 @@ namespace Comparacio
                 elements.Add(border);
                 ellipses.Add(point);
             }
-
-
         }
 
 
         private void mn_genera_Click(object sender, RoutedEventArgs e)
         {
-
             canvas.Children.Clear();
             posintercanvis = new int[numlinies];
-
 
             if (chk_aleatori.IsChecked == true)
                 GenerarAleatori(numlinies);
@@ -199,7 +171,6 @@ namespace Comparacio
             if (chk_invertit.IsChecked == true)
                 Invertir(numlinies);
 
-
             Crear();
         }
 
@@ -208,6 +179,7 @@ namespace Comparacio
         {
             canvas.Children.Clear();
             ComboBoxItem cb = (ComboBoxItem)cb_tfigures.SelectedItem;
+
             if (cb.Content.ToString() == "Punts")
                 CrearPunts();
             else
@@ -219,7 +191,6 @@ namespace Comparacio
         {
             valorsReals = new int[valor];
             valorsFigures = new int[valor];
-
 
             for (int i = 0; i < valor; i++)
             {
@@ -235,15 +206,12 @@ namespace Comparacio
 
         private void Invertir(int valor)
         {
-
-
             int[] tempfigures = valorsFigures;
             valorsFigures = new int[valor];
             for (int i = 0; i < valor; i++)
             {
                 valorsFigures[i] = tempfigures[valor - 1 - i];
             }
-
         }
 
 
@@ -252,9 +220,8 @@ namespace Comparacio
             ComboBoxItem comboBoxItem = (ComboBoxItem)cb_ordenacio.SelectedItem;
 
             if (valorsFigures.Length != 0)
-
+            {
                 while (!CheckOrdenat())
-
                 {
                     if (comboBoxItem.Content.ToString().Contains("Inserció Directa"))
                     {
@@ -273,6 +240,7 @@ namespace Comparacio
                         Bombolla();
                     }
                 }
+            }
         }
 
 
@@ -430,7 +398,6 @@ namespace Comparacio
                 }
             posintercanvis = new int[numlinies];
             Crear();
-
         }
 
 
